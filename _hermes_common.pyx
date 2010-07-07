@@ -21,7 +21,6 @@ cdef inline PY_NEW(T):
 # Matrix classes:
 
 cdef class Matrix:
-    cdef c_Matrix *thisptr
 
     def get_size(self):
         """

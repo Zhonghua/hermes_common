@@ -131,3 +131,5 @@ cdef api void numpy2c_double_inplace(object A_n, double **A_c, int *n)
 
 cdef inline PY_NEW(T)
 
+cdef class Matrix:
+    cdef c_Matrix *thisptr
