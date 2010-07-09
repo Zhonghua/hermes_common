@@ -64,6 +64,22 @@ cdef class Matrix:
         """
         self.thisptr.get(m, n)
 
+cdef class Vector:
+
+    def get_size(self):
+        return self.thisptr.get_size()
+
+    def add(self, int m, double v):
+        self.thisptr.add(m, v)
+
+    def get(self, int m):
+        self.thisptr.get(m)
+
+cdef class AVector(Vector):
+
+    def __init__(self, size=0, is_complex=False):
+        self.thisptr = <c_Vector *>new_AVector(size, is_complex)
+
 cdef class DenseMatrix(Matrix):
 
     def to_numpy(self):
