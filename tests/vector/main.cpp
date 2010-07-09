@@ -66,38 +66,35 @@ void test_vector2()
     _assert(fabs(v[4].imag() - 1.5) < EPS);
 }
 
-/*
 #include "python_api.h"
 
-void test_matrix5()
+void test_vector3()
 {
-    DenseMatrix m(3);
-    m.add(0, 2, 3.5);
-    m.add(1, 2, 4.5);
-    m.add(2, 1, 1.5);
-    m.add(1, 2, 1);
-    m.add(0, 0, 2.5);
-    printf("Dense Matrix\n");
+    AVector m(3);
+    _assert(m.get_size() == 3);
+    m.add(0, 3.5);
+    m.add(1, 4.5);
+    m.add(2, 1.5);
+    m.add(1, 1);
+    m.add(0, 2.5);
 
     Python p;
-    p.push("m", c2py_DenseMatrix(&m));
+    p.push("m", c2py_AVector(&m));
     p.exec("print m");
     p.exec("d = m.to_numpy()");
     p.exec("print d");
     p.exec("eps = 1e-10");
-    p.exec("assert abs(d[0, 0]-2.5) < eps");
-    p.exec("assert abs(d[0, 2]-3.5) < eps");
-    p.exec("assert abs(d[1, 2]-5.5) < eps");
-    p.exec("assert abs(d[2, 1]-1.5) < eps");
-    p.exec("assert abs(d[0, 1]-0.0) < eps");
+    p.exec("assert abs(d[0]-6) < eps");
+    p.exec("assert abs(d[1]-5.5) < eps");
+    p.exec("assert abs(d[2]-1.5) < eps");
 }
-*/
 
 int main(int argc, char* argv[])
 {
     try {
         test_vector1();
         test_vector2();
+        test_vector3();
 
         return ERROR_SUCCESS;
     } catch(std::exception const &ex) {
