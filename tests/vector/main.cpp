@@ -6,6 +6,8 @@
 #define ERROR_SUCCESS                               0
 #define ERROR_FAILURE                              -1
 
+#define EPS 1e-12
+
 void _assert(bool a)
 {
     if (!a) throw std::runtime_error("Assertion failed.");
@@ -21,6 +23,9 @@ void test_vector1()
     m.add(1, 1);
     m.add(0, 2.5);
     m.print();
+    _assert(fabs(m.get(0) - 6) < EPS);
+    _assert(fabs(m.get(1) - 5.5) < EPS);
+    _assert(fabs(m.get(2) - 1.5) < EPS);
 }
 
 void test_vector2()
@@ -32,6 +37,16 @@ void test_vector2()
     m.add(4, cplx(4.3, 1.5));
     m.add(2, cplx(4.1, 1));
     m.print();
+    _assert(fabs(m.get_cplx(0).real() - 0) < EPS);
+    _assert(fabs(m.get_cplx(0).imag() - 0) < EPS);
+    _assert(fabs(m.get_cplx(1).real() - 2.3) < EPS);
+    _assert(fabs(m.get_cplx(1).imag() - 3.5) < EPS);
+    _assert(fabs(m.get_cplx(2).real() - 5.3) < EPS);
+    _assert(fabs(m.get_cplx(2).imag() - 5.5) < EPS);
+    _assert(fabs(m.get_cplx(3).real() - 2) < EPS);
+    _assert(fabs(m.get_cplx(3).imag() - 1.5) < EPS);
+    _assert(fabs(m.get_cplx(4).real() - 4.3) < EPS);
+    _assert(fabs(m.get_cplx(4).imag() - 1.5) < EPS);
 }
 
 /*
