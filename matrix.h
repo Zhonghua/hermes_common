@@ -95,6 +95,41 @@ protected:
     bool complex;
 };
 
+class Vector {
+public:
+    Vector() {}
+    virtual ~Vector() {}
+    inline virtual int get_size() { return this->size; }
+    inline bool is_complex() { return this->complex; }
+    virtual void print() = 0;
+
+    virtual void add(int m, double v) = 0;
+    virtual void add(int m, cplx v)
+    {
+        _error("internal error: add(int, cplx) not implemented.");
+    }
+    virtual void add_block(int *iidx, int ilen, double* vec)
+    {
+        for (int i = 0; i < ilen; i++)
+            if (iidx[i] >= 0)
+                this->add(iidx[i], vec[i]);
+    }
+    virtual void add_block(int *iidx, int ilen, cplx* vec)
+    {
+        for (int i = 0; i < ilen; i++)
+            if (iidx[i] >= 0)
+                this->add(iidx[i], vec[i]);
+    }
+    virtual double get(int m) = 0;
+    virtual cplx get_cplx(int m)
+    {
+        _error("internal error: get_cplx(int) not implemented.");
+    }
+protected:
+    int size;
+    bool complex;
+};
+
 // **********************************************************************************************************
 
 class CooMatrix : public Matrix {
