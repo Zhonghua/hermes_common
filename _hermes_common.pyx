@@ -86,10 +86,11 @@ cdef class AVector(Vector):
             raise NotImplementedError("This is not yet implemented")
         cdef int n, i, len=self.get_size()
         cdef double *cdata
+        cdef double *v = self.thisptr.get_c_array()
         row = empty([len], dtype="double")
         numpy2c_double_inplace(row, &cdata, &n)
         for i in range(len):
-            cdata[i] = self.thisptr.get(i);
+            cdata[i] = v[i]
         return row
 
 cdef class DenseMatrix(Matrix):

@@ -96,6 +96,7 @@ cdef extern from "matrix.h":
         int is_complex()
         void add(int m, double v)
         double get(int m)
+        double *get_c_array()
 
     cdef struct c_AVector "AVector":
         pass
