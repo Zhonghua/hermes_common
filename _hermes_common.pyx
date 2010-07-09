@@ -80,6 +80,18 @@ cdef class AVector(Vector):
     def __init__(self, size=0, is_complex=False):
         self.thisptr = <c_Vector *>new_AVector(size, is_complex)
 
+    def to_numpy(self):
+        from numpy import empty
+        if self.thisptr.is_complex():
+            raise NotImplementedError("This is not yet implemented")
+        cdef int n, i, len=self.get_size()
+        cdef double *cdata
+        row = empty([len], dtype="double")
+        numpy2c_double_inplace(row, &cdata, &n)
+        for i in range(len):
+            cdata[i] = self.thisptr.get(i);
+        return row
+
 cdef class DenseMatrix(Matrix):
 
     def to_numpy(self):
