@@ -351,6 +351,12 @@ cdef class CSCMatrix(SparseMatrix):
 cdef Matrix py2c_Matrix(object M):
     return M
 
+cdef api object c2py_AVector(c_AVector *m):
+    cdef AVector c
+    c = <AVector>PY_NEW(AVector)
+    c.thisptr = <c_Vector *>m
+    return c
+
 cdef api object c2py_DenseMatrix(c_DenseMatrix *m):
     cdef DenseMatrix c
     c = <DenseMatrix>PY_NEW(DenseMatrix)
