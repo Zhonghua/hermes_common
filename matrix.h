@@ -125,6 +125,14 @@ public:
     {
         _error("internal error: get_cplx(int) not implemented.");
     }
+    virtual double *get_c_array()
+    {
+        _error("internal error: get_c_array() not implemented.");
+    }
+    virtual cplx *get_c_array_cplx()
+    {
+        _error("internal error: get_c_array_cplx() not implemented.");
+    }
 protected:
     int size;
     bool complex;
@@ -182,6 +190,14 @@ public:
     }
     virtual cplx get_cplx(int m) {
         return this->v_cplx[m];
+    }
+    virtual double *get_c_array()
+    {
+        return this->v;
+    }
+    virtual cplx *get_c_array_cplx()
+    {
+        return this->v_cplx;
     }
 private:
     double *v;

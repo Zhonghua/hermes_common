@@ -26,6 +26,11 @@ void test_vector1()
     _assert(fabs(m.get(0) - 6) < EPS);
     _assert(fabs(m.get(1) - 5.5) < EPS);
     _assert(fabs(m.get(2) - 1.5) < EPS);
+
+    double *v = m.get_c_array();
+    _assert(fabs(v[0] - 6) < EPS);
+    _assert(fabs(v[1] - 5.5) < EPS);
+    _assert(fabs(v[2] - 1.5) < EPS);
 }
 
 void test_vector2()
@@ -47,6 +52,18 @@ void test_vector2()
     _assert(fabs(m.get_cplx(3).imag() - 1.5) < EPS);
     _assert(fabs(m.get_cplx(4).real() - 4.3) < EPS);
     _assert(fabs(m.get_cplx(4).imag() - 1.5) < EPS);
+
+    cplx *v = m.get_c_array_cplx();
+    _assert(fabs(v[0].real() - 0) < EPS);
+    _assert(fabs(v[0].imag() - 0) < EPS);
+    _assert(fabs(v[1].real() - 2.3) < EPS);
+    _assert(fabs(v[1].imag() - 3.5) < EPS);
+    _assert(fabs(v[2].real() - 5.3) < EPS);
+    _assert(fabs(v[2].imag() - 5.5) < EPS);
+    _assert(fabs(v[3].real() - 2) < EPS);
+    _assert(fabs(v[3].imag() - 1.5) < EPS);
+    _assert(fabs(v[4].real() - 4.3) < EPS);
+    _assert(fabs(v[4].imag() - 1.5) < EPS);
 }
 
 /*
