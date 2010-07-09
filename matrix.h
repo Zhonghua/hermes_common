@@ -130,6 +130,58 @@ protected:
     bool complex;
 };
 
+// Uses a C++ array as the internal implementation
+class AVector: public Vector {
+public:
+    AVector(int n, bool is_complex=false) {
+        if (complex) {
+            this->v_cplx = new cplx[n];
+            for (int i=0; i < this->get_size(); i++)
+                this->v_cplx[i] = 0;
+        }
+        else {
+            this->v = new double[n];
+            for (int i=0; i < this->get_size(); i++)
+                this->v[i] = 0;
+        }
+        this->complex = is_complex;
+    }
+    virtual ~AVector() {
+        if (complex)
+            delete[] this->v_cplx;
+        else
+            delete[] this->v;
+    }
+    virtual void print() {
+        printf("[");
+        for (int i=0; i < this->get_size(); i++)
+            printf("%f ", this->v[i]);
+        printf("]\n");
+    }
+
+    virtual void add(int m, double v) {
+        if (m >= 0)
+            this->v[m] += v;
+    }
+    virtual void add(int m, cplx v)
+    {
+        if (m >= 0)
+            this->v_cplx[m] += v;
+    }
+    virtual double get(int m) {
+        return this->v[m];
+    }
+    virtual cplx get_cplx(int m) {
+        return this->v_cplx[m];
+    }
+protected:
+    int size;
+    bool complex;
+private:
+    double *v;
+    cplx *v_cplx;
+};
+
 // **********************************************************************************************************
 
 class CooMatrix : public Matrix {
