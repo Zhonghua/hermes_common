@@ -130,21 +130,30 @@ protected:
     bool complex;
 };
 
+// print vector - int
+void print_vector(const char *label, int *value, int size);
+// print vector - double
+void print_vector(const char *label, double *value, int size);
+// print vector - cplx
+void print_vector(const char *label, cplx *value, int size);
+
+
 // Uses a C++ array as the internal implementation
 class AVector: public Vector {
 public:
     AVector(int n, bool is_complex=false) {
-        if (complex) {
+        this->size = n;
+        this->complex = is_complex;
+        if (is_complex) {
             this->v_cplx = new cplx[n];
-            for (int i=0; i < this->get_size(); i++)
+            for (int i=0; i < n; i++)
                 this->v_cplx[i] = 0;
         }
         else {
             this->v = new double[n];
-            for (int i=0; i < this->get_size(); i++)
+            for (int i=0; i < n; i++)
                 this->v[i] = 0;
         }
-        this->complex = is_complex;
     }
     virtual ~AVector() {
         if (complex)
@@ -153,10 +162,10 @@ public:
             delete[] this->v;
     }
     virtual void print() {
-        printf("[");
-        for (int i=0; i < this->get_size(); i++)
-            printf("%f ", this->v[i]);
-        printf("]\n");
+        if (this->complex)
+            print_vector("", this->v_cplx, this->get_size());
+        else
+            print_vector("", this->v, this->get_size());
     }
 
     virtual void add(int m, double v) {
@@ -174,9 +183,6 @@ public:
     virtual cplx get_cplx(int m) {
         return this->v_cplx[m];
     }
-protected:
-    int size;
-    bool complex;
 private:
     double *v;
     cplx *v_cplx;
@@ -403,13 +409,6 @@ private:
     int *Ap;
     int *Ai;
 };
-
-// print vector - int
-void print_vector(const char *label, int *value, int size);
-// print vector - double
-void print_vector(const char *label, double *value, int size);
-// print vector - cplx
-void print_vector(const char *label, cplx *value, int size);
 
 template<typename T>
 void dense_to_coo(int size, int nnz, T **Ad, int *row, int *col, T *A);
